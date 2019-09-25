@@ -2301,7 +2301,6 @@ class BaselineClusteringRolloutAgent(BaselineClusteringAgent):
 
 
 
-"""
 
 
 class HumanAgent(Agent):
@@ -2334,5 +2333,3 @@ class HumanAgent(Agent):
                 sys.exit()
             #except:
             #    print('Your choice is invalid! Try again.')
-
-"""

@@ -8,6 +8,7 @@ from models.latent_clustering_model import LatentClusteringModel, LatentClusteri
 from models.latent_clustering_model import LatentClusteringPredictionModel, BaselineClusteringModel
 from models.selection_model import SelectionModel
 from models.rnn_model import RnnModel
+from models.rnn_variational_model import RnnVariationalModel
 
 
 MODELS = {
@@ -17,6 +18,7 @@ MODELS = {
     'baseline_clustering_model': BaselineClusteringModel,
     'selection_model': SelectionModel,
     'rnn_model': RnnModel,
+    'rnn_variational_model': RnnVariationalModel,
 }
 
 

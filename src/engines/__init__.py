@@ -49,9 +49,9 @@ class EngineBase(object):
         if self.args.visual:
             self.model_plot = vis.ModulePlot(self.model, plot_weight=True, plot_grad=False)
             self.loss_plot = vis.Plot(['train', 'valid', 'valid_select'],
-                'loss', 'loss', 'epoch', running_n=1, write_to_file=False)
+                'loss', 'loss', 'epoch', running_n=1)
             self.ppl_plot = vis.Plot(['train', 'valid', 'valid_select'],
-                'perplexity', 'ppl', 'epoch', running_n=1, write_to_file=False)
+                'perplexity', 'ppl', 'epoch', running_n=1)
 
     def make_opt(self, lr):
         return optim.RMSprop(
