@@ -211,7 +211,11 @@ class RnnVariationalModel(nn.Module):
                 # Add the context to the word embedding
                 inpt_emb = torch.cat([self.word_encoder(inpt), ctx_h], 1)
                 # Update RNN state with last word
-                lang_h = self.writer(inpt_emb, lang_h)
+                print("vm")
+                print(inpt_emb.size())
+                print(lang_h.size())
+                print(self.writer)
+                lang_h = self.writer(inpt_emb, lang_h[:, :128])
                 lang_hs.append(lang_h)
 
             # Decode words using the inverse of the word embedding matrix
@@ -253,7 +257,7 @@ class RnnVariationalModel(nn.Module):
     def kl_div(self, mu, std):
         var = std * std
         terms = mu * mu + var - torch.log(var) - 1
-        return terms.sum(2).mean()
+        return terms.mean()
 
     def score_sent(self, sent, lang_h, ctx_h, temperature):
         score = 0
@@ -310,12 +314,12 @@ class RnnVariationalModel(nn.Module):
             mu = self.sample(mu, std)
             kl_loss = self.kl_div(mu, std)
 
-        lang_hs = self.reader_dropout(mu)
+        # lang_hs = self.reader_dropout(mu)
 
-        decoded = self.decoder(lang_hs.view(-1, lang_hs.size(2)))
+        decoded = self.decoder(mu.view(-1, mu.size(2)))
         out = F.linear(decoded, self.word_encoder.weight)
 
-        return out, lang_hs, kl_loss
+        return out, mu, kl_loss
 
     def forward_selection(self, inpt_emb, lang_h, ctx_h):
         # run a birnn over the concatenation of the input embeddings and language model hidden states

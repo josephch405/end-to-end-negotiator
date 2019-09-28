@@ -145,6 +145,20 @@ class RnnAgent(Agent):
         return choice
 
 
+class RnnVariationalAgent(RnnAgent):
+    def __init__(self, model, args, name='Alice', train=False, diverse=False):
+        super(RnnVariationalAgent, self).__init__(model, args, name, train, diverse)
+
+    def feed_context(self, context):
+        self.lang_hs = []
+        self.sents = []
+        self.words = []
+        self.context = context
+        self.ctx = self._encode(context, self.model.context_dict)
+        self.ctx_h = self.model.forward_context(Variable(self.ctx))
+        print(self.model.args.nhid_lang)
+        self.lang_h = self.model.zero_h(1, self.model.args.nhid_lang * 2)
+
 class HierarchicalAgent(RnnAgent):
     def __init__(self, model, args, name='Alice'):
         super(HierarchicalAgent, self).__init__(model, args, name)

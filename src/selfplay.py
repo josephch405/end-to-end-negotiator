@@ -59,7 +59,7 @@ def get_agent_type(model, smart=False):
         else:
             return RnnAgent
     elif isinstance(model, RnnVariationalModel):
-        return RnnAgent
+        return RnnVariationalAgent
     elif isinstance(model, BaselineClusteringModel):
         if smart:
             return BaselineClusteringRolloutAgent
